@@ -50,7 +50,7 @@
     <header class="invisible spin">
       <div class="navbar bg-base-100 shadow-sm lg:px-20">
         <div class="flex-1">
-          <a class="btn btn-ghost text-xl">daisyUI</a>
+          <a class="text-xl">GitHub Issues Tracker</a>
         </div>
         <div class="flex gap-2">
           <div class="join">
@@ -59,7 +59,7 @@
               placeholder="Search"
               class="input input-bordered focus:outline-none focus:border-purple-700 w-24 md:w-auto hidden md:block"
             />
-            <button class="btn btn-primary">
+            <button class="btn btn-primary rounded-r-sm">
               <i class="fa-solid fa-plus"></i>New Issue
             </button>
           </div>
@@ -93,10 +93,13 @@
     <main class="w-[1110px] mx-auto mt-[60px] invisible spin">
       <!-- Btn container  -->
 
-      <section class="flex gap-2 bg-white p-6 rounded-lg shadow-md">
-        <button class="btn btn-primary w-24">All</button>
-        <button class="btn w-24">Primary</button>
-        <button class="btn w-24">All</button>
+      <section
+        id="btn-container"
+        class="flex gap-2 bg-white p-6 rounded-lg shadow-md"
+      >
+        <button onclick="allIssue()" class="btn btn-primary w-24">All</button>
+        <button id="closed-btn" class="btn w-24">Open</button>
+        <button class="btn w-24">Closed</button>
       </section>
 
       <!-- Issue section  -->
@@ -109,7 +112,9 @@
             <img src="./assets/Aperture.png" alt="" />
           </div>
           <div class="">
-            <h1 class="text-xl font-semibold text-[#1F2937]">50 Issues</h1>
+            <h1 class="text-xl font-semibold text-[#1F2937]">
+              <span id="all-issue">0</span> Issues
+            </h1>
             <p class="text-base text-[#64748B]">
               Track and manage your project issues
             </p>
@@ -131,54 +136,7 @@
       <!-- Card section  -->
 
       <section class="p-6 bg-[#fbfbfbd9] shadow-md">
-        <div class="CONTAINER grid grid-cols-4 gap-3">
-          <div onclick="my_modal_1.showModal()" class="">
-            <div class="rounded-t-md w-fit bg-white shadow-md p-4">
-              <div class="flex justify-between mb-3">
-                <div class="">
-                  <img src="./assets/Open-Status.png" alt="" class="w-full" />
-                </div>
-                <div class="">
-                  <h1
-                    class="text-[12px] w-16 bg-amber-200 text-center font-medium rounded-full"
-                  >
-                    HIGH
-                  </h1>
-                </div>
-              </div>
-              <div class="2">
-                <h1 class="text-[14px] font-semibold text-[#1F2937] mb-2">
-                  Fix navigation menu on mobile devices
-                </h1>
-              </div>
-              <div class="3">
-                <p class="line-clamp-2 text-[14px] mb-3 text-[#64748B]">
-                  The navigation menu doesn't collapse properly on mobile
-                  devices...
-                </p>
-              </div>
-
-              <div class="flex gap-1">
-                <div class="">
-                  <p
-                    class="text-[#EF4444] text-[12px] font-medium rounded-full px-2 border-2 border-[#FECACA]"
-                  >
-                    <i class="fa-solid fa-bug"></i> BUG
-                  </p>
-                </div>
-                <div
-                  class="border-2 border-[#FDE68A] rounded-full px-2 font-medium text-[12px]"
-                >
-                  HELP WANTED
-                </div>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-white mt-0.5 shadow-md p-4">
-              <div class="text-[14px] text-[#64748B]"><p>#1 JON BY DON</p></div>
-              <div class="text-[14px] text-[#64748B]"><p>1/2/3000</p></div>
-            </div>
-          </div>
-        </div>
+        <div id="card-container" class="grid grid-cols-4 gap-3"></div>
       </section>
     </main>
 
@@ -193,7 +151,7 @@
     <!-- Open the modal using ID.showModal() method -->
     <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
 
-    <dialog id="my_modal_1" class="modal">
+    <dialog id="my_modal_1" class="invisible modal">
       <div class="modal-box">
         <div class="modal-action">
           <div class="w-fit rounded-xl">
@@ -252,7 +210,7 @@
               </div>
             </div>
             <form method="dialog" class="flex justify-end">
-              <button class="btn btn-primary">Close</button>
+              <button class="btn btn-primary focus:outline-none">Close</button>
             </form>
           </div>
         </div>
