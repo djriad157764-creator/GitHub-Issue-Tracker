@@ -2,7 +2,10 @@
 
 document.getElementById("sign-in-btn").addEventListener("click", (event) => {
   event.preventDefault();
-  const inputUserName = document.getElementById("input-user-name").value.trim();
+  const inputUserName = document
+    .getElementById("input-user-name")
+    .value.trim()
+    .toLowerCase();
   const inputPassword = document.getElementById("input-password").value.trim();
 
   const validUserName = "admin";
