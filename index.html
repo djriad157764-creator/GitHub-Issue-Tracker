@@ -39,17 +39,56 @@
       }
     </style>
   </head>
-  <body>
-    <!-- Header Section  -->
-    <header></header>
-
+  <body class="bg-[#F8FAFC] py-20">
     <!-- Main Section  -->
-    <main></main>
-
-    <!-- Footer Section  -->
-    <footer></footer>
+    <main class="max-w-[520px] rounded-lg bg-white shadow-lg p-6 mx-auto">
+      <div class="">
+        <div class="flex justify-center items-center">
+          <img src="./assets/github-logo.png" alt="" />
+        </div>
+        <div class="text-center">
+          <h1 class="font-semibold text-2xl text-[#1F2937]">
+            GitHub Issues Tracker
+          </h1>
+          <p class="text-base text-[#64748B]">Sign in to manage your issues</p>
+        </div>
+      </div>
+      <div class="mx-auto">
+        <div class="card-body flex justify-center">
+          <fieldset class="fieldset">
+            <label class="label text-base">Username</label>
+            <input
+              type="text"
+              class="input w-full"
+              placeholder="Enter Username"
+            />
+            <div><p class="text-[14px] text-[#4A00FF]">Default: admin</p></div>
+            <label class="label text-base">Password</label>
+            <input
+              type="password"
+              class="input w-full"
+              placeholder="Enter Password"
+            />
+            <div>
+              <p class="text-[14px] text-[#4A00FF]">Default: admin123</p>
+            </div>
+            <button id="sign-in-btn" class="btn btn-primary mt-4">Sign In</button>
+          </fieldset>
+        </div>
+      </div>
+      <div class="text-center mb-6">
+        <p class="text-base text-[#1F2937]">OR</p>
+      </div>
+      <div class="text-center mb-2">
+        <p class="text-[14px] text-[#64748B]">Demo Credentials:</p>
+      </div>
+      <div class="text-center p-6">
+        <p class="text-base text-[#1F2937]">Username: admin</p>
+        <p class="text-base text-[#1F2937]">Password: admin123</p>
+      </div>
+    </main>
 
     <!-- Js -->
-    <script src="./scripts.js"></script>
+    <script src="./scripts/loginForm.js"></script>
   </body>
 </html>
