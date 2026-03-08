@@ -42,6 +42,17 @@
       * {
         font-family: "Geist", sans-serif;
       }
+
+      .active-btn {
+        background: #4a00ff !important;
+        color: white !important;
+        border: none !important;
+      }
+      .inactive-btn {
+        background: #e4e4e7 !important;
+        color: #64748b !important;
+        border: none !important;
+      }
     </style>
   </head>
   <body class="bg-[#F8FAFC]">
@@ -90,31 +101,63 @@
 
     <!-- Main Section  -->
 
-    <main class="w-[1110px] mx-auto mt-[60px] invisible spin">
+    <main
+      class="w-full sm:px-6 lg:w-[1110px] lg:px-0 mx-auto mt-4 sm:mt-[60px] invisible spin"
+    >
       <!-- Btn container  -->
 
-      <section
-        id="btn-container"
-        class="flex gap-2 bg-white p-6 rounded-lg shadow-md"
-      >
-        <button onclick="allIssue()" class="btn btn-primary w-24">All</button>
-        <button id="closed-btn" class="btn w-24">Open</button>
-        <button class="btn w-24">Closed</button>
+      <section class="w-full">
+        <div
+          id="btn-container"
+          class="flex justify-start gap-2 bg-white p-6 rounded-lg shadow-md"
+        >
+          <button
+            onclick="toggleBtn('all-btn')"
+            id="all-btn"
+            class="btn active-btn w-24"
+          >
+            All
+          </button>
+          <button
+            onclick="toggleBtn('open-btn')"
+            id="open-btn"
+            class="btn inactive-btn w-24"
+          >
+            Open
+          </button>
+          <button
+            onclick="toggleBtn('closed-btn')"
+            id="closed-btn"
+            class="btn inactive-btn w-24"
+          >
+            Closed
+          </button>
+        </div>
       </section>
 
       <!-- Issue section  -->
 
       <section
-        class="flex justify-between items-center shadow-md bg-white p-6 rounded-t-lg mt-4"
+        class="flex gap-5 justify-between items-center shadow-md bg-white p-6 rounded-t-lg mt-4"
       >
         <div class="flex gap-2 items-center">
           <div class="">
             <img src="./assets/Aperture.png" alt="" />
           </div>
           <div class="">
-            <h1 class="text-xl font-semibold text-[#1F2937]">
-              <span id="all-issue">0</span> Issues
-            </h1>
+            <div class="flex items-center gap-2">
+              <span class="hidden" data-id="all-count-div" id="all-issue"
+                >0</span
+              >
+              <span class="hidden" data-id="open-count-div" id="open-count"
+                >40</span
+              >
+              <span class="hidden" data-id="closed-count-div" id="closed-count"
+                >10</span
+              >
+              <h1 class="text-xl font-semibold text-[#1F2937]">Issues</h1>
+            </div>
+
             <p class="text-base text-[#64748B]">
               Track and manage your project issues
             </p>
@@ -135,8 +178,13 @@
 
       <!-- Card section  -->
 
-      <section class="p-6 bg-[#fbfbfbd9] shadow-md">
-        <div id="card-container" class="grid grid-cols-4 gap-3"></div>
+      <section
+        class="p-6 bg-[#fbfbfbd9] w-full lg:w-[1110px] mx-auto shadow-md"
+      >
+        <div
+          id="card-container"
+          class="grid grid-cols-1 mx-auto justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+        ></div>
       </section>
     </main>
 
@@ -225,3 +273,6 @@
     <script src="./scripts/dasboard.js"></script>
   </body>
 </html>
+
+
+

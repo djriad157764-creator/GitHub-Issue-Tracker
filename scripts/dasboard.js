@@ -1,5 +1,7 @@
 // Full page Loading Spinner
 
+let currentStatus = "all-btn";
+
 window.addEventListener("load", () => {
   const spinner = document.getElementById("spinner-container");
   const content = document.querySelectorAll(".spin");
@@ -43,8 +45,10 @@ const allIssueDisplay = (issue) => {
     const card = document.createElement("div");
 
     card.innerHTML = `
+<div class="w-[256px]">
   
-            <div onclick="my_modal_1.showModal()" class="rounded-t-md w-fit bg-white shadow-md p-4">
+  
+            <div onclick="my_modal_1.showModal()" class="rounded-t-md  h-[200px] bg-white shadow-md p-4">
               <div class="flex justify-between mb-3">
                 <div class="">
                   <img src="./assets/Open-Status.png" alt="" class="w-full" />
@@ -88,11 +92,57 @@ const allIssueDisplay = (issue) => {
               <div class="text-[14px] text-[#64748B]"><p>1/15/2024</p></div>
             </div>
          
-   `;
+  
+</div> `;
     cardContainer.appendChild(card);
   });
 };
 
+// get all btn
+const btnAllIssue = document.getElementById("all-btn");
+const openBtn = document.getElementById("open-btn");
+const closedBtn = document.getElementById("closed-btn");
+
+// Toggle Btn
+
+const toggleBtn = (id) => {
+  currentStatus = id;
+
+  const allCountDiv = document.getElementById("all-issue");
+  const openCountDiv = document.getElementById("open-count");
+  const closedCountDiv = document.getElementById("closed-count");
+
+  const allBtnGet = [btnAllIssue, openBtn, closedBtn];
+
+  allBtnGet.forEach((btn) => {
+    btn.classList.remove("active-btn", "inactive-btn");
+
+    // check btn
+
+    if (btn.id === id) {
+      btn.classList.add("active-btn"); //add style class
+      btn.classList.remove("inactive-btn"); //remove style class
+    } else {
+      btn.classList.add("inactive-btn"); //add style class
+      btn.classList.remove("active-btn"); //remove style class
+    }
+  });
+
+  // Show and Hide Issue Count
+
+  if (id === "all-btn") {
+    allCountDiv.classList.remove("hidden");
+    openCountDiv.classList.add("hidden");
+    closedCountDiv.classList.add("hidden");
+  } else if (id === "open-btn") {
+    allCountDiv.classList.add("hidden");
+    openCountDiv.classList.remove("hidden");
+    closedCountDiv.classList.add("hidden");
+  } else if (id === "closed-btn") {
+    allCountDiv.classList.add("hidden");
+    openCountDiv.classList.add("hidden");
+    closedCountDiv.classList.remove("hidden");
+  }
+};
+
 allIssue();
-
-
