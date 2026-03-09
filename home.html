@@ -73,7 +73,6 @@
         padding-left: 30px;
       }
     </style>
-
   </head>
   <body class="bg-[#F8FAFC]">
     <!-- Header Section  -->
@@ -87,7 +86,8 @@
               alt=""
               class="w-9 hidden md:block"
             />
-            <a class="text-base md:text-xl lg:text-2xl font-bold text-[#1F2937]"
+            <a
+              class="text-[18px] md:text-xl lg:text-2xl font-bold text-[#1F2937]"
               >GitHub Issues Tracker</a
             >
           </div>
@@ -183,11 +183,22 @@
           </div>
           <div class="">
             <div class="flex items-center gap-2">
-              <span class="" data-id="all-count-div" id="all-issue">0</span>
-              <span class="hidden" data-id="open-count-div" id="open-count"
+              <span
+                class="text-xl font-semibold text-[#1F2937]"
+                data-id="all-count-div"
+                id="all-issue"
                 >0</span
               >
-              <span class="hidden" data-id="closed-count-div" id="closed-count"
+              <span
+                class="hidden text-xl font-semibold text-[#1F2937]"
+                data-id="open-count-div"
+                id="open-count"
+                >0</span
+              >
+              <span
+                class="hidden text-xl font-semibold text-[#1F2937]"
+                data-id="closed-count-div"
+                id="closed-count"
                 >0</span
               >
               <h1 class="text-xl font-semibold text-[#1F2937]">Issues</h1>
@@ -217,92 +228,25 @@
         <div
           id="card-container"
           class="grid grid-cols-1 mx-auto justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
-        >
-        
-      </div>
+        ></div>
       </section>
     </main>
 
     <!-- loading spinner  -->
 
-    <div id="spinner-container" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div
+      id="spinner-container"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    >
       <span class="loading loading-spinner loading-xl"></span>
     </div>
 
     <!-- Modal section  -->
 
     <!-- Open the modal using ID.showModal() method -->
-    <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+    <!-- <button class="btn" onclick="display_modal.showModal()">open modal</button> -->
 
-    <dialog id="my_modal_1" class="modal">
-      <div class="modal-box">
-        <div class="modal-action">
-          <div class="w-fit rounded-xl">
-            <div class="">
-              <h1 class="text-2xl font-bold text-[#1F2937] mb-2">
-                Fix broken image uploads
-              </h1>
-              <div class="flex gap-5 mb-6">
-                <p
-                  class="bg-[#00A96E] px-3 py-1 text-white text-[14px] rounded-full mr-2"
-                >
-                  Opened
-                </p>
-                <ul class="flex gap-5 items-center">
-                  <li class="list-disc mr-2 text-[12px] text-[#64748B]">
-                    Opened by Fahim Ahmed
-                  </li>
-                  <li class="list-disc text-[12px] text-[#64748B]">
-                    22/02/2026
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="flex gap-1 mb-6">
-              <div class="">
-                <p
-                  class="text-[#EF4444] text-[12px] font-medium rounded-full px-2 border-2 border-[#FECACA]"
-                >
-                  <i class="fa-solid fa-bug"></i> BUG
-                </p>
-              </div>
-              <div
-                class="border-2 border-[#FDE68A] rounded-full px-2 font-medium text-[12px]"
-              >
-                HELP WANTED
-              </div>
-            </div>
-            <div class="mb-6">
-              <p class="text-[14px] mb-3 text-[#64748B]">
-                The navigation menu doesn't collapse properly on mobile devices.
-                Need to fix the responsive behavior.
-              </p>
-            </div>
-            <div class="flex justify-between p-4 mb-6">
-              <div class="">
-                <p>Assignee</p>
-                <h1>Fahim Ahmed</h1>
-              </div>
-              <div class="">
-                <p>Priority</p>
-                <h1
-                  class="text-[12px] w-16 bg-amber-200 text-center font-medium rounded-full"
-                >
-                  HIGH
-                </h1>
-              </div>
-            </div>
-            <form method="dialog" class="flex justify-end">
-              <button class="btn btn-primary focus:outline-none">Close</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </dialog>
-
-    <!-- Footer Section  -->
-
-    <footer class="invisible spin"></footer>
+    <dialog id="display_modal" data-id="Modal-container" class="modal"></dialog>
 
     <!-- Js -->
     <script src="./scripts/dasboard.js"></script>

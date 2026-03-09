@@ -36,6 +36,103 @@ const allIssue = async () => {
   }
 };
 
+// single api
+
+const singleIssue = async (id) => {
+  const modal = document.getElementById("display_modal");
+  modal.showModal();
+
+  const modalContent = modal.querySelector(".modal-box");
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="flex justify-center p-10">
+        <span class="loading loading-spinner loading-xl"></span>
+      </div>
+    </div>
+  `;
+
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const singleData = data.data;
+
+    modalDisplay(singleData);
+  } catch (error) {
+    const modal = document.getElementById("display_modal");
+    modal.innerHTML = `
+      <div class="modal-box">
+        <p class='text-red-500 text-center p-10'>Failed to Load Modal</p>
+        <form method="dialog" class="flex justify-end">
+          <button class="btn btn-primary">Close</button>
+        </form>
+      </div>
+    `;
+  }
+};
+
+const modalDisplay = (issue) => {
+  const modalContainer = document.getElementById("display_modal");
+
+  const modalHTML = `
+   <div class="modal-box">
+        <div class="modal-action">
+          <div class="w-fit rounded-xl">
+            <div class="">
+              <h1 class="text-2xl font-bold text-[#1F2937] mb-2">
+                Opened ${issue.title}
+              </h1>
+              <div class="flex gap-5 mb-6">
+                <p
+                  class="bg-[#00A96E] px-3 py-1 text-white text-[14px] rounded-full mr-2"
+                >
+                   ${issue.status === "open" ? "Open" : "Closed"}
+                </p>
+                <ul class="flex gap-5 items-center">
+                  <li class="list-disc mr-2 text-[12px] text-[#64748B]">
+                    Opened by ${issue.assignee}
+                  </li>
+                  <li class="list-disc text-[12px] text-[#64748B]">
+                    ${new Date(issue.createdAt).toLocaleDateString()}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="flex gap-1">
+              <div class="flex mb-3">
+                ${generateLabels(issue.labels)}
+              </div>
+             
+            </div>
+            <div class="mb-6">
+              <p class="text-[14px] mb-3 text-[#64748B]">
+                ${issue.description}
+              </p>
+            </div>
+            <div class="flex justify-between p-4 mb-6">
+              <div class="">
+                <p>Assignee</p>
+                <h1>${issue.assignee}</h1>
+              </div>
+              <div class="">
+                <p>Priority</p>
+                <div>
+                ${priorityBgChange(issue.priority)}
+                </div>
+              </div>
+            </div>
+            <form method="dialog" class="flex justify-end">
+              <button class="btn btn-primary focus:outline-none">Close</button>
+            </form>
+          </div>
+        </div>
+      </div>
+   
+   `;
+  modalContainer.innerHTML = modalHTML;
+};
+
 // generateLabels
 
 const generateLabels = (labels) => {
@@ -60,6 +157,28 @@ const generateLabels = (labels) => {
     .join("");
 };
 
+const priorityBgChange = (priority) => {
+  if (priority === "medium") {
+    return `<h1
+                    class="text-[12px] w-16 bg-[#FFF6D1] text-[#F59E0B] text-center font-medium rounded-full"
+                  >
+                    Medium
+                  </h1>`;
+  } else if (priority === "low") {
+    return `<h1
+                    class="text-[12px] w-16 bg-[#EEEFF2] text-[#9CA3AF] text-center font-medium rounded-full"
+                  >
+                    Low
+                  </h1>`;
+  } else if (priority === "high") {
+    return `<h1
+                    class="text-[12px] w-16 bg-[#FEECEC] text-[#EF4444] text-center font-medium rounded-full"
+                  >
+                    High
+                  </h1>`;
+  }
+};
+
 // Display all Issue
 
 const allIssueDisplay = (issue) => {
@@ -77,7 +196,7 @@ const allIssueDisplay = (issue) => {
   issue.forEach((cardDetails) => {
     const card = document.createElement("div");
 
-    console.log(cardDetails.status);
+    //  Display Modal
 
     if (cardDetails.status === "open") {
       card.className =
@@ -95,30 +214,10 @@ const allIssueDisplay = (issue) => {
       }
     };
 
-    const priorityBgChange = () => {
-      if (cardDetails.priority === "medium") {
-        return `<h1
-                    class="text-[12px] w-16 bg-[#FFF6D1] text-[#F59E0B] text-center font-medium rounded-full"
-                  >
-                    Medium
-                  </h1>`;
-      } else if (cardDetails.priority === "low") {
-        return `<h1
-                    class="text-[12px] w-16 bg-[#EEEFF2] text-[#9CA3AF] text-center font-medium rounded-full"
-                  >
-                    Low
-                  </h1>`;
-      } else if (cardDetails.priority === "high") {
-        return `<h1
-                    class="text-[12px] w-16 bg-[#FEECEC] text-[#EF4444] text-center font-medium rounded-full"
-                  >
-                    High
-                  </h1>`;
-      }
-    };
+    // priorityBgChange
 
     card.innerHTML = `
-<div onclick="my_modal_1.showModal()" class="w-[370px] sm:w-[250px] px-3 sm:px-0 ">
+                   <div onclick="singleIssue('${cardDetails.id}')" class="w-[370px] sm:w-[250px] px-3 sm:px-0 ">
   
   
             <div class="rounded-t-md  h-[200px] bg-white shadow-md p-4">
@@ -210,6 +309,8 @@ const toggleBtn = (id) => {
 
   filterIssues(id);
 };
+
+// filter open data and filter data
 
 const filterIssues = async (filterType) => {
   document.getElementById("card-container").innerHTML =
