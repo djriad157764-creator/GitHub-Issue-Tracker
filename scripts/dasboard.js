@@ -81,7 +81,7 @@ const modalDisplay = (issue) => {
           <div class="w-fit rounded-xl">
             <div class="">
               <h1 class="text-2xl font-bold text-[#1F2937] mb-2">
-                Opened ${issue.title}
+              ${issue.title}
               </h1>
               <div class="flex gap-5 mb-6">
                 <p
@@ -200,10 +200,10 @@ const allIssueDisplay = (issue) => {
 
     if (cardDetails.status === "open") {
       card.className =
-        "hover:scale-102 hover:-translate-y-2 transition-all duration-400 cursor-pointer rounded-t-lg border-t-4 border-[#00A96E]";
+        "w-full   hover:scale-102 hover:-translate-y-2 transition-all duration-400 cursor-pointer rounded-t-lg border-t-4  border-[#00A96E]";
     } else if (cardDetails.status === "closed") {
       card.className =
-        "hover:scale-102 hover:-translate-y-2 transition-all duration-400 cursor-pointer rounded-t-lg border-t-4 border-[#A855F7]";
+        "w-full  hover:scale-102 hover:-translate-y-2 transition-all duration-400 cursor-pointer rounded-t-lg border-t-4 border-[#A855F7]";
     }
 
     const openClosedIcon = () => {
@@ -217,45 +217,48 @@ const allIssueDisplay = (issue) => {
     // priorityBgChange
 
     card.innerHTML = `
-                   <div onclick="singleIssue('${cardDetails.id}')" class="w-[370px] sm:w-[250px] px-3 sm:px-0 ">
+<div onclick="singleIssue('${cardDetails.id}')" class="sm:px-0">
+ <div class="rounded-t-md p-4 w-full h-[200px] bg-white shadow-md  flex flex-col justify-between">
+    <div class="flex justify-between mb-3">
+      <div id="open-closed-icon" class="">${openClosedIcon()}</div>
+      <div class="">${priorityBgChange(cardDetails.priority)}</div>
+    </div>
+    <div class="2">
+      <h1 class="text-[14px] font-semibold text-[#1F2937] mb-2">
+        ${cardDetails.title}
+      </h1>
+    </div>
+    <div class="3">
+      <p class="line-clamp-2 text-[14px] mb-3 text-[#64748B]">
+        ${cardDetails.description}
+      </p>
+    </div>
+
+    <div class="flex gap-1">
+      <div class="flex">${generateLabels(cardDetails.labels)}</div>
+    </div>
+  </div>
+
   
+ <div class="rounded-b-md bg-white mt-0.5 shadow-md p-4">
+  <div class="flex justify-between text-[14px] text-[#64748B]">
+    <p>
+      #${cardDetails.id} ${cardDetails.assignee || "Unassigned"} 
+    </p>
+    <p>${new Date(cardDetails.createdAt).toLocaleDateString()}</p>
+  </div>
+  <div class="flex justify-between text-[14px] text-[#64748B]">
+    <p>
+       ${cardDetails.assignee || "Unassigned"} 
+    </p>
+    <p>${new Date(cardDetails.createdAt).toLocaleDateString()}</p>
+  </div>
+</div>
   
-            <div class="rounded-t-md  h-[200px] bg-white shadow-md p-4">
-              <div class="flex justify-between mb-3">
-                <div id="open-closed-icon" class="">
-                 ${openClosedIcon()}
-                </div>
-                <div class="">
-                  
-                  ${priorityBgChange(cardDetails.priority)}
-                </div>
-              </div>
-              <div class="2">
-                <h1 class="text-[14px] font-semibold text-[#1F2937] mb-2">
-                  ${cardDetails.title}
-                </h1>
-              </div>
-              <div class="3">
-                <p class="line-clamp-2 text-[14px] mb-3 text-[#64748B]">
-                  ${cardDetails.description}
-                </p>
-              </div>
 
-              <div class="flex gap-1">
-                <div class="flex">
+</div>
 
-                    ${generateLabels(cardDetails.labels)}
-
-                </div>
-              
-              </div>
-            </div>
-            <div class="rounded-b-md bg-white mt-0.5 shadow-md p-4">
-              <div class="text-[14px] text-[#64748B]"><p>#${cardDetails.id} ${cardDetails.assignee || "Unassigned"}</p></div>
-              <div class="text-[14px] text-[#64748B]"><p>${new Date(cardDetails.createdAt).toLocaleDateString()}</p></div>
-            </div>
-         
-</div> `;
+`;
 
     cardContainer.appendChild(card);
   });
@@ -335,8 +338,43 @@ const filterIssues = async (filterType) => {
   }
 };
 
+// desktop search function
+
 const searchItemInApi = async () => {
   const searchValue = document.getElementById("input-search");
+  const searchItem = searchValue.value.trim();
+
+  if (searchItem === "") {
+    allIssue();
+    return;
+  }
+  document.getElementById("card-container").innerHTML =
+    `<div class="col-span-full mx-auto"><span class="loading loading-spinner loading-xl"></span></div>`;
+
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchItem}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const searchResults = data.data || [];
+
+    if (searchResults.length === 0) {
+      document.getElementById("card-container").innerHTML =
+        `<p class='text-gray-500 text-xl col-span-full text-center'>No issues found for "${searchItem}"</p>`;
+    } else {
+      allIssueDisplay(searchResults);
+    }
+  } catch (error) {
+    document.getElementById("card-container").innerHTML =
+      "<p class='text-red-500 text-3xl flex justify-center items-center col-span-full'>Failed to Load Card</p>";
+  }
+};
+
+// mobile search function
+
+const searchItemInApiMobile = async () => {
+  const searchValue = document.getElementById("mobile-search");
   const searchItem = searchValue.value.trim();
 
   if (searchItem === "") {

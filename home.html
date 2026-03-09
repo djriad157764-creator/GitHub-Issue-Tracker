@@ -74,19 +74,20 @@
       }
     </style>
   </head>
-  <body class="bg-[#F8FAFC]">
+  <body id="body" class="bg-[#F8FAFC]">
     <!-- Header Section  -->
 
     <header class="invisible spin">
       <div class="navbar bg-base-100 shadow-sm lg:px-20">
         <div class="flex-1">
-          <div class="flex gap-1 items-center">
+          <div class="flex gap-1 items-center cursor-pointer">
             <img
               src="./assets/github-logo.png"
               alt=""
               class="w-9 hidden md:block"
             />
             <a
+              href="#body"
               class="text-[18px] md:text-xl lg:text-2xl font-bold text-[#1F2937]"
               >GitHub Issues Tracker</a
             >
@@ -100,12 +101,20 @@
               placeholder="Search"
               class="input input-bordered focus:outline-none rounded-l-sm focus:border-purple-700 w-24 md:w-auto hidden md:block"
             />
-            <button
-              onclick="searchItemInApi()"
-              class="btn btn-primary rounded-r-sm"
-            >
-              <i class="fa-solid fa-plus"></i>New Issue
-            </button>
+            <div class="">
+              <button
+                onclick="searchItemInApi()"
+                class="btn btn-primary rounded-r-sm hidden md:block"
+              >
+                <i class="fa-solid fa-search"></i>Search
+              </button>
+              <button
+                onclick="searchItemInApiMobile()"
+                class="btn btn-primary rounded-r-sm md:hidden"
+              >
+                <i class="fa-solid fa-search"></i>Find Issue
+              </button>
+            </div>
           </div>
           <div class="dropdown dropdown-end md:hidden">
             <div
@@ -117,7 +126,7 @@
                 <img
                   src="./assets/github-logo.png"
                   alt=""
-                  class="w-8 overflow-x-visible"
+                  class="w-8 overflow-x-visible cursor-pointer"
                 />
               </div>
             </div>
@@ -126,9 +135,10 @@
               class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <input
+                id="mobile-search"
                 type="search"
                 placeholder="Search"
-                class="input focus:border-purple-700 rounded-sm input-bordered focus:outline-none w-24 w-full"
+                class="input focus:border-purple-700 rounded-sm input-bordered focus:outline-none w-full"
               />
             </ul>
           </div>
@@ -175,7 +185,7 @@
       <!-- Issue section  -->
 
       <section
-        class="flex gap-5 justify-between items-center shadow-md bg-white p-6 rounded-t-lg mt-4"
+        class="flex gap-5 border-2 border-neutral/10 justify-between items-center shadow-lg bg-white p-6 rounded-t-lg mt-4"
       >
         <div class="flex gap-2 items-center">
           <div class="">
@@ -224,10 +234,10 @@
 
       <!-- Card section  -->
 
-      <section class="p-4 sm:p-6 bg-[#fbfbfbd9] w-full mx-auto shadow-md">
+      <section class="p-4 sm:p-6 bg-[#fbfbfbd9] mx-auto shadow-md hdden">
         <div
           id="card-container"
-          class="grid grid-cols-1 mx-auto justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+          class="grid grid-cols-1 mx-auto sm:grid-cols-2 md:grid-cols-3 p-0 lg:grid-cols-4 gap-3"
         ></div>
       </section>
     </main>
@@ -252,3 +262,69 @@
     <script src="./scripts/dasboard.js"></script>
   </body>
 </html>
+
+<!-- 
+card.innerHTML = `
+<div onclick="singleIssue('${cardDetails.id}')" class="sm:px-0">
+  <div class="rounded-t-md h-[200px] bg-white shadow-md p-4">
+    <div class="flex justify-between mb-3">
+      <div id="open-closed-icon" class="">${openClosedIcon()}</div>
+      <div class="">${priorityBgChange(cardDetails.priority)}</div>
+    </div>
+    <div class="2">
+      <h1 class="text-[14px] font-semibold text-[#1F2937] mb-2">
+        ${cardDetails.title}
+      </h1>
+    </div>
+    <div class="3">
+      <p class="line-clamp-2 text-[14px] mb-3 text-[#64748B]">
+        ${cardDetails.description}
+      </p>
+    </div>
+
+    <div class="flex gap-1">
+      <div class="flex">${generateLabels(cardDetails.labels)}</div>
+    </div>
+  </div>
+
+  <div class="flex justify-between rounded-b-md bg-white mt-0.5 shadow-md px-">
+    <div class="flex flex-col text-[14px] text-[#64748B]">
+      <div>
+        #${cardDetails.id} ${cardDetails.assignee || "Unassigned"}
+      </div>
+      <div>
+        assignee ${cardDetails.assignee || "Unassigned"}
+      </div>
+    </div>
+
+
+    
+    <div class="text-[14px] text-[#64748B]">
+
+      <p>
+        ${new Date().toLocaleDateString()}
+      </p>
+      <p>
+        updatedAt ${new Date().toLocaleDateString()}
+      </p>
+    </div>
+  </div>
+</div>
+`; -->
+
+<div class="rounded-b-md bg-white mt-0.5 shadow-md p-3">
+  <div
+    class="flex justify-between gap-2 text-[12px] sm:text-[14px] text-[#64748B]"
+  >
+    <div class="flex flex-col min-w-[120px]">
+      <span>#${cardDetails.id} ${cardDetails.assignee || "Unassigned"}</span>
+      <span>assignee ${cardDetails.assignee || "Unassigned"}</span>
+    </div>
+    <div class="flex flex-col min-w-[100px]">
+      <span>${new Date(cardDetails.createdAt).toLocaleDateString()}</span>
+      <span
+        >updatedAt ${new Date(cardDetails.updatedAt).toLocaleDateString()}</span
+      >
+    </div>
+  </div>
+</div>
